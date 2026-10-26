@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 3: Form Validation | FSD Lab</title>
+    <!-- Google Fonts for typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            max-width: 760px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2b6cb0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #1a365d;
+            transform: translateX(-3px);
+        }
+
+        .nav-pagination {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-badge {
+            background: #ebf8ff;
+            color: #2b6cb0;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .page-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: #edf2f7;
+            transition: all 0.2s;
+        }
+
+        .page-link:hover {
+            background: #2b6cb0;
+            color: #ffffff;
+        }
+
+        /* Student info bar */
+        .student-strip {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4a5568;
+            font-size: 0.88rem;
+        }
+
+        .student-strip strong {
+            color: #1a365d;
+        }
+
+        /* Container */
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .assignment-section {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .assignment-title {
+            color: #2b6cb0;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 12px;
+            margin-bottom: 8px;
+            font-size: 1.6rem;
+            text-align: center;
+        }
+
+        .assignment-subtitle {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #718096;
+            font-size: 0.92rem;
+        }
+
+        /* Form Styling */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input:focus {
+            border-color: #3182ce;
+        }
+
+        .btn-primary {
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #2b6cb0;
+        }
+
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.85rem;
+            font-weight: 500;
+            min-height: 18px;
+            display: block;
+        }
+
+        .input-error {
+            border-color: #e53e3e !important;
+            background-color: #fff5f5;
+        }
+
+        .success-box {
+            display: none;
+            margin-top: 15px;
+            padding: 14px;
+            background-color: #c6f6d5;
+            border: 1px solid #38a169;
+            color: #22543d;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #718096;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <a href="index.html" class="back-link">
+            ← Back to All Assignments
+        </a>
+        <div class="nav-pagination">
+            <a href="assignment2.html" class="page-link">← Prev: To-Do List</a>
+            <span class="nav-badge">Assignment 3 of 6</span>
+            <a href="assignment4.html" class="page-link">Next: Profile Card →</a>
+        </div>
+    </div>
+
+    <!-- Student Info Strip -->
+    <div class="student-strip">
+        <strong>FSD Lab Practical</strong> | Student: <strong>Rishabh Patil</strong> | PRN: <strong>1272250228</strong>
+    </div>
+
+    <div class="container">
+        <!-- ========================================================
+             ASSIGNMENT 3: JAVASCRIPT FORM VALIDATION
+             ======================================================== -->
+        <section class="assignment-section">
+            <h1 class="assignment-title">Assignment 3: User Registration Form</h1>
+            <p class="assignment-subtitle">
+                Input validation with real-time error messages for Name, Email, Phone, and Password.
+            </p>
+
+            <form id="registration-form" onsubmit="validateRegistrationForm(event)" novalidate>
+                <!-- Full Name Field -->
+                <div class="form-group">
+                    <label for="reg-name">Full Name:</label>
+                    <input type="text" id="reg-name" placeholder="Enter your full name">
+                    <span class="error-message" id="error-name"></span>
+                </div>
+
+                <!-- Email Field -->
+                <div class="form-group">
+                    <label for="reg-email">Email Address:</label>
+                    <input type="email" id="reg-email" placeholder="name@example.com">
+                    <span class="error-message" id="error-email"></span>
+                </div>
+
+                <!-- Phone Field -->
+                <div class="form-group">
+                    <label for="reg-phone">Phone Number:</label>
+                    <input type="tel" id="reg-phone" placeholder="10-digit mobile number">
+                    <span class="error-message" id="error-phone"></span>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="reg-password">Password:</label>
+                    <input type="password" id="reg-password" placeholder="At least 6 characters">
+                    <span class="error-message" id="error-password"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-primary">Register Now</button>
+
+                <!-- Success Alert Message -->
+                <div class="success-box" id="reg-success-message">
+                    🎉 Registration Successful! All details are valid.
+                </div>
+            </form>
+        </section>
+
+        <footer>
+            <p>Full Stack Web Development Lab | Assignment 3</p>
+        </footer>
+    </div>
+
+    <!-- ========================================================
+         JAVASCRIPT CODE FOR ASSIGNMENT 3
+         ======================================================== -->
+    <script>
+        function validateRegistrationForm(event) {
+            // Form ko page refresh karne se rokna
+            event.preventDefault();
+
+            // Inputs ko select karna
+            var nameInput = document.getElementById('reg-name');
+            var emailInput = document.getElementById('reg-email');
+            var phoneInput = document.getElementById('reg-phone');
+            var passwordInput = document.getElementById('reg-password');
+
+            // Error display spans ko select karna
+            var errorName = document.getElementById('error-name');
+            var errorEmail = document.getElementById('error-email');
+            var errorPhone = document.getElementById('error-phone');
+            var errorPassword = document.getElementById('error-password');
+
+            // Success box
+            var successBox = document.getElementById('reg-success-message');
+
+            // Pehle ke saare errors reset karna
+            errorName.innerText = "";
+            errorEmail.innerText = "";
+            errorPhone.innerText = "";
+            errorPassword.innerText = "";
+
+            nameInput.classList.remove('input-error');
+            emailInput.classList.remove('input-error');
+            phoneInput.classList.remove('input-error');
+            passwordInput.classList.remove('input-error');
+            successBox.style.display = "none";
+
+            // Track karne ke liye flag variable
+            var isValid = true;
+
+            // 1. Full Name Validation: Khali nahi hona chahiye aur kam se kam 3 characters hone chahiye
+            var nameValue = nameInput.value.trim();
+            if (nameValue === "") {
+                errorName.innerText = "Full Name is required.";
+                nameInput.classList.add('input-error');
+                isValid = false;
+            } else if (nameValue.length < 3) {
+                errorName.innerText = "Name must be at least 3 characters long.";
+                nameInput.classList.add('input-error');
+                isValid = false;
+            }
+
+            // 2. Email Validation: Basic standard email format check
+            var emailValue = emailInput.value.trim();
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailValue === "") {
+                errorEmail.innerText = "Email address is required.";
+                emailInput.classList.add('input-error');
+                isValid = false;
+            } else if (!emailRegex.test(emailValue)) {
+                errorEmail.innerText = "Please enter a valid email address (e.g., user@domain.com).";
+                emailInput.classList.add('input-error');
+                isValid = false;
+            }
+
+            // 3. Phone Number Validation: Exactly 10 digits hone chahiye
+            var phoneValue = phoneInput.value.trim();
+            var phoneRegex = /^[0-9]{10}$/;
+            if (phoneValue === "") {
+                errorPhone.innerText = "Phone number is required.";
+                phoneInput.classList.add('input-error');
+                isValid = false;
+            } else if (!phoneRegex.test(phoneValue)) {
+                errorPhone.innerText = "Phone number must be exactly 10 digits.";
+                phoneInput.classList.add('input-error');
+                isValid = false;
+            }
+
+            // 4. Password Validation: Minimum 6 characters
+            var passwordValue = passwordInput.value;
+            if (passwordValue === "") {
+                errorPassword.innerText = "Password is required.";
+                passwordInput.classList.add('input-error');
+                isValid = false;
+            } else if (passwordValue.length < 6) {
+                errorPassword.innerText = "Password must be at least 6 characters long.";
+                passwordInput.classList.add('input-error');
+                isValid = false;
+            }
+
+            // Agar sabhi inputs valid hain:
+            if (isValid) {
+                successBox.style.display = "block";
+                document.getElementById('registration-form').reset();
+            }
+        }
+    </script>
+</body>
+
+</html>

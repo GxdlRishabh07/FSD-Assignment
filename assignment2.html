@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 2: DOM-based To-Do List | FSD Lab</title>
+    <!-- Google Fonts for typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            max-width: 760px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2b6cb0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #1a365d;
+            transform: translateX(-3px);
+        }
+
+        .nav-pagination {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-badge {
+            background: #ebf8ff;
+            color: #2b6cb0;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .page-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: #edf2f7;
+            transition: all 0.2s;
+        }
+
+        .page-link:hover {
+            background: #2b6cb0;
+            color: #ffffff;
+        }
+
+        /* Student info bar */
+        .student-strip {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4a5568;
+            font-size: 0.88rem;
+        }
+
+        .student-strip strong {
+            color: #1a365d;
+        }
+
+        /* Container */
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .assignment-section {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .assignment-title {
+            color: #2b6cb0;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 12px;
+            margin-bottom: 8px;
+            font-size: 1.6rem;
+            text-align: center;
+        }
+
+        .assignment-subtitle {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #718096;
+            font-size: 0.92rem;
+        }
+
+        /* To-Do List Specific Styling */
+        .todo-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 14px;
+            border: 1.5px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input[type="text"]:focus {
+            border-color: #3182ce;
+        }
+
+        .btn-primary {
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            background-color: #2b6cb0;
+        }
+
+        .todo-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f7fafc;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border-left: 5px solid #3182ce;
+            transition: all 0.2s ease;
+        }
+
+        .todo-item:hover {
+            background: #edf2f7;
+        }
+
+        .todo-item.completed .todo-text {
+            text-decoration: line-through;
+            color: #a0aec0;
+        }
+
+        .todo-item.completed {
+            border-left-color: #38a169;
+        }
+
+        .todo-text {
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            flex: 1;
+            word-break: break-word;
+            padding-right: 12px;
+        }
+
+        .todo-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-action {
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .btn-action:hover {
+            opacity: 0.85;
+        }
+
+        .btn-toggle {
+            background-color: #38a169;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #e53e3e;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #718096;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <a href="index.html" class="back-link">
+            ← Back to All Assignments
+        </a>
+        <div class="nav-pagination">
+            <a href="assignment1.html" class="page-link">← Prev: Calculator</a>
+            <span class="nav-badge">Assignment 2 of 6</span>
+            <a href="assignment3.html" class="page-link">Next: Validation →</a>
+        </div>
+    </div>
+
+    <!-- Student Info Strip -->
+    <div class="student-strip">
+        <strong>FSD Lab Practical</strong> | Student: <strong>Rishabh Patil</strong> | PRN: <strong>1272250228</strong>
+    </div>
+
+    <div class="container">
+        <!-- ========================================================
+             ASSIGNMENT 2: DOM-BASED TO-DO LIST
+             ======================================================== -->
+        <section class="assignment-section">
+            <h1 class="assignment-title">Assignment 2: Interactive To-Do List</h1>
+            <p class="assignment-subtitle">
+                Add tasks, toggle completed state, and delete tasks dynamically using DOM methods.
+            </p>
+
+            <!-- Input area for new task -->
+            <div class="todo-input-group">
+                <input type="text" id="todo-input" placeholder="What do you need to do today?">
+                <button type="button" class="btn-primary" onclick="addTask()">Add Task</button>
+            </div>
+
+            <!-- Unordered list where tasks will be added dynamically -->
+            <ul id="todo-list" class="todo-list">
+                <!-- Javascript will add <li> elements here -->
+            </ul>
+        </section>
+
+        <footer>
+            <p>Full Stack Web Development Lab | Assignment 2</p>
+        </footer>
+    </div>
+
+    <!-- ========================================================
+         JAVASCRIPT CODE FOR ASSIGNMENT 2
+         ======================================================== -->
+    <script>
+        function addTask() {
+            // Step 1: Input field ko select karna aur value nikalna
+            var inputField = document.getElementById('todo-input');
+            var taskText = inputField.value.trim(); // extra spaces hatane ke liye trim()
+
+            // Step 2: Agar input khali ho toh alert dekar rokna
+            if (taskText === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+            // Step 3: Naya <li> element create karna (DOM method)
+            var li = document.createElement('li');
+            li.className = 'todo-item'; // CSS class attach ki
+
+            // Step 4: Task ke text ke liye <span> create karna
+            var span = document.createElement('span');
+            span.className = 'todo-text';
+            span.innerText = taskText;
+
+            // Step 5: Buttons ke container div ko create karna
+            var actionsDiv = document.createElement('div');
+            actionsDiv.className = 'todo-actions';
+
+            // Complete / Done Button create karna
+            var doneBtn = document.createElement('button');
+            doneBtn.className = 'btn-action btn-toggle';
+            doneBtn.innerText = 'Done';
+            doneBtn.onclick = function () {
+                // li me 'completed' class toggle karna (cut/strike effect)
+                li.classList.toggle('completed');
+                if (li.classList.contains('completed')) {
+                    doneBtn.innerText = 'Undo';
+                } else {
+                    doneBtn.innerText = 'Done';
+                }
+            };
+
+            // Delete Button create karna
+            var deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn-action btn-delete';
+            deleteBtn.innerText = 'Delete';
+            deleteBtn.onclick = function () {
+                // li ko list se dynamically remove karna (DOM method)
+                li.remove();
+            };
+
+            // Step 6: Saare elements ko ek dusre me assemble karna (appendChild)
+            actionsDiv.appendChild(doneBtn);
+            actionsDiv.appendChild(deleteBtn);
+
+            li.appendChild(span);
+            li.appendChild(actionsDiv);
+
+            // Step 7: Final <li> ko main <ul> list me add karna
+            document.getElementById('todo-list').appendChild(li);
+
+            // Step 8: Input box ko wapas empty karna naye task ke liye
+            inputField.value = "";
+        }
+
+        // Allow pressing 'Enter' key in the input field to add task
+        document.getElementById('todo-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+    </script>
+</body>
+
+</html>

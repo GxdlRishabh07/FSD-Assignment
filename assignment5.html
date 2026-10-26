@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 5: Controlled React Form | FSD Lab</title>
+    <!-- Google Fonts for typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- React 18, ReactDOM and Babel CDNs -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            max-width: 760px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2b6cb0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #1a365d;
+            transform: translateX(-3px);
+        }
+
+        .nav-pagination {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-badge {
+            background: #ebf8ff;
+            color: #2b6cb0;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .page-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: #edf2f7;
+            transition: all 0.2s;
+        }
+
+        .page-link:hover {
+            background: #2b6cb0;
+            color: #ffffff;
+        }
+
+        /* Student info bar */
+        .student-strip {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4a5568;
+            font-size: 0.88rem;
+        }
+
+        .student-strip strong {
+            color: #1a365d;
+        }
+
+        /* Container */
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .assignment-section {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .assignment-title {
+            color: #2b6cb0;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 12px;
+            margin-bottom: 8px;
+            font-size: 1.6rem;
+            text-align: center;
+        }
+
+        .assignment-subtitle {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #718096;
+            font-size: 0.92rem;
+        }
+
+        /* Controlled React Form Styling */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #3182ce;
+        }
+
+        .controlled-form-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .realtime-preview-box {
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .preview-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2b6cb0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .preview-item {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+
+        .preview-item strong {
+            color: #2d3748;
+        }
+
+        .preview-item span.highlight {
+            color: #3182ce;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #718096;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <a href="index.html" class="back-link">
+            ← Back to All Assignments
+        </a>
+        <div class="nav-pagination">
+            <a href="assignment4.html" class="page-link">← Prev: Profile Card</a>
+            <span class="nav-badge">Assignment 5 of 6</span>
+            <a href="assignment6.html" class="page-link">Next: Counter App →</a>
+        </div>
+    </div>
+
+    <!-- Student Info Strip -->
+    <div class="student-strip">
+        <strong>FSD Lab Practical</strong> | Student: <strong>Rishabh Patil</strong> | PRN: <strong>1272250228</strong>
+    </div>
+
+    <div class="container">
+        <!-- ========================================================
+             ASSIGNMENT 5: CONTROLLED REACT FORM
+             ======================================================== -->
+        <section class="assignment-section">
+            <h1 class="assignment-title">Assignment 5: Controlled React Form</h1>
+            <p class="assignment-subtitle">
+                A form where React state controls the inputs and displays live updates in real-time below.
+            </p>
+
+            <!-- React root container for Assignment 5 -->
+            <div id="react-controlled-form-root"></div>
+        </section>
+
+        <footer>
+            <p>Full Stack Web Development Lab | Assignment 5</p>
+        </footer>
+    </div>
+
+    <!-- ========================================================
+         REACT CODE FOR ASSIGNMENT 5 (USING BABEL)
+         ======================================================== -->
+    <script type="text/babel">
+        function ControlledFormApp() {
+            // React Hook: useState form ke sabhi fields ka data hold karta hai
+            const [formData, setFormData] = React.useState({
+                fullName: '',
+                email: '',
+                techStack: 'React',
+                feedback: ''
+            });
+
+            // Jab bhi user input me kuch type karega, yeh function state update karega
+            const handleChange = (e) => {
+                const { name, value } = e.target;
+                // Previous state ko preserve karte hue sirf changed field update karte hain
+                setFormData(prev => ({
+                    ...prev,
+                    [name]: value
+                }));
+            };
+
+            return (
+                <div className="controlled-form-container">
+                    <form onSubmit={(e) => e.preventDefault()}>
+                        {/* Input 1: Full Name */}
+                        <div className="form-group">
+                            <label>Full Name:</label>
+                            <input
+                                type="text"
+                                name="fullName"
+                                placeholder="e.g. Rahul Verma"
+                                value={formData.fullName}
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        {/* Input 2: Email */}
+                        <div className="form-group">
+                            <label>Email Address:</label>
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="e.g. rahul@example.com"
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        {/* Input 3: Tech Stack Dropdown */}
+                        <div className="form-group">
+                            <label>Favorite Tech Stack:</label>
+                            <select
+                                name="techStack"
+                                value={formData.techStack}
+                                onChange={handleChange}
+                            >
+                                <option value="React">React.js</option>
+                                <option value="Node.js">Node.js</option>
+                                <option value="JavaScript">Pure JavaScript</option>
+                                <option value="Python">Python</option>
+                            </select>
+                        </div>
+
+                        {/* Input 4: Feedback / Bio */}
+                        <div className="form-group">
+                            <label>Bio / Notes:</label>
+                            <textarea
+                                name="feedback"
+                                rows="3"
+                                placeholder="Type something about yourself..."
+                                value={formData.feedback}
+                                onChange={handleChange}
+                            ></textarea>
+                        </div>
+                    </form>
+
+                    {/* REAL-TIME PREVIEW: Data displayed instantly as user types */}
+                    <div className="realtime-preview-box">
+                        <div className="preview-title">
+                            ⚡ Real-Time Live Preview (Controlled by React State)
+                        </div>
+                        <div className="preview-item">
+                            <strong>Full Name:</strong> <span className="highlight">{formData.fullName || "(Waiting for input...)"}</span>
+                        </div>
+                        <div className="preview-item">
+                            <strong>Email Address:</strong> <span className="highlight">{formData.email || "(Waiting for input...)"}</span>
+                        </div>
+                        <div className="preview-item">
+                            <strong>Selected Tech Stack:</strong> <span className="highlight">{formData.techStack}</span>
+                        </div>
+                        <div className="preview-item">
+                            <strong>Bio / Notes:</strong> <span className="highlight">{formData.feedback || "(Waiting for input...)"}</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Render Assignment 5 into its DOM container
+        const formRoot = ReactDOM.createRoot(document.getElementById('react-controlled-form-root'));
+        formRoot.render(<ControlledFormApp />);
+    </script>
+</body>
+
+</html>

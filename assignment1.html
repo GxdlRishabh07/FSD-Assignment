@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 1: JavaScript Calculator | FSD Lab</title>
+    <!-- Google Fonts for typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        /* Top Header & Navigation Bar */
+        .top-nav {
+            max-width: 760px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2b6cb0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #1a365d;
+            transform: translateX(-3px);
+        }
+
+        .nav-pagination {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-badge {
+            background: #ebf8ff;
+            color: #2b6cb0;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .page-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: #edf2f7;
+            transition: all 0.2s;
+        }
+
+        .page-link:hover {
+            background: #2b6cb0;
+            color: #ffffff;
+        }
+
+        /* Student info bar */
+        .student-strip {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4a5568;
+            font-size: 0.88rem;
+        }
+
+        .student-strip strong {
+            color: #1a365d;
+        }
+
+        /* Container */
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .assignment-section {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .assignment-title {
+            color: #2b6cb0;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 12px;
+            margin-bottom: 8px;
+            font-size: 1.6rem;
+            text-align: center;
+        }
+
+        .assignment-subtitle {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #718096;
+            font-size: 0.92rem;
+        }
+
+        /* Form Styling */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #3182ce;
+        }
+
+        .btn-primary {
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #2b6cb0;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 16px;
+            background-color: #ebf8ff;
+            border: 1.5px dashed #3182ce;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2b6cb0;
+            transition: all 0.3s ease;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #718096;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <a href="index.html" class="back-link">
+            ← Back to All Assignments
+        </a>
+        <div class="nav-pagination">
+            <span class="nav-badge">Assignment 1 of 6</span>
+            <a href="assignment2.html" class="page-link">Next: To-Do List →</a>
+        </div>
+    </div>
+
+    <!-- Student Info Strip -->
+    <div class="student-strip">
+        <strong>FSD Lab Practical</strong> | Student: <strong>Rishabh Patil</strong> | PRN: <strong>1272250228</strong>
+    </div>
+
+    <div class="container">
+        <!-- ========================================================
+             ASSIGNMENT 1: JAVASCRIPT CALCULATOR
+             ======================================================== -->
+        <section class="assignment-section">
+            <h1 class="assignment-title">Assignment 1: Simple Calculator</h1>
+            <p class="assignment-subtitle">
+                Using dedicated JavaScript functions & a switch statement for arithmetic operations.
+            </p>
+
+            <div class="calc-form">
+                <!-- First Number Input -->
+                <div class="form-group">
+                    <label for="calc-num1">Enter First Number:</label>
+                    <input type="number" id="calc-num1" placeholder="e.g. 10">
+                </div>
+
+                <!-- Operator Select Dropdown -->
+                <div class="form-group">
+                    <label for="calc-operator">Select Operation:</label>
+                    <select id="calc-operator">
+                        <option value="+">Addition (+)</option>
+                        <option value="-">Subtraction (-)</option>
+                        <option value="*">Multiplication (*)</option>
+                        <option value="/">Division (/)</option>
+                    </select>
+                </div>
+
+                <!-- Second Number Input -->
+                <div class="form-group">
+                    <label for="calc-num2">Enter Second Number:</label>
+                    <input type="number" id="calc-num2" placeholder="e.g. 5">
+                </div>
+
+                <!-- Button to trigger calculation -->
+                <button type="button" class="btn-primary" onclick="performCalculation()">Calculate Result</button>
+
+                <!-- Box to show calculated result -->
+                <div class="result-box" id="calc-result">
+                    Result: --
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Full Stack Web Development Lab | Assignment 1</p>
+        </footer>
+    </div>
+
+    <!-- ========================================================
+         JAVASCRIPT CODE FOR ASSIGNMENT 1
+         ======================================================== -->
+    <script>
+        // Addition Function
+        function add(num1, num2) {
+            return num1 + num2;
+        }
+
+        // Subtraction Function
+        function subtract(num1, num2) {
+            return num1 - num2;
+        }
+
+        // Multiplication Function
+        function multiply(num1, num2) {
+            return num1 * num2;
+        }
+
+        // Division Function
+        function divide(num1, num2) {
+            // Zero se divide hone se rokne ke liye check
+            if (num2 === 0) {
+                return "Cannot divide by zero";
+            }
+            return num1 / num2;
+        }
+
+        // Main Calculation Controller Function
+        function performCalculation() {
+            // Step 1: Input values ko get karna
+            var num1Input = document.getElementById('calc-num1').value;
+            var num2Input = document.getElementById('calc-num2').value;
+            var operator = document.getElementById('calc-operator').value;
+            var resultDisplay = document.getElementById('calc-result');
+
+            // Step 2: Check karna ki inputs empty toh nahi hain
+            if (num1Input === "" || num2Input === "") {
+                resultDisplay.innerText = "Please enter both numbers!";
+                resultDisplay.style.color = "#e53e3e";
+                return;
+            }
+
+            // Step 3: String values ko Numbers me convert karna
+            var n1 = parseFloat(num1Input);
+            var n2 = parseFloat(num2Input);
+            var calculatedResult = 0;
+
+            // Step 4: Switch statement se user ke chune operator ke hisab se function call karna
+            switch (operator) {
+                case "+":
+                    calculatedResult = add(n1, n2);
+                    break;
+                case "-":
+                    calculatedResult = subtract(n1, n2);
+                    break;
+                case "*":
+                    calculatedResult = multiply(n1, n2);
+                    break;
+                case "/":
+                    calculatedResult = divide(n1, n2);
+                    break;
+                default:
+                    calculatedResult = "Invalid Operator";
+            }
+
+            // Step 5: Screen par result show karna
+            resultDisplay.style.color = "#2b6cb0";
+            resultDisplay.innerText = "Result: " + calculatedResult;
+        }
+    </script>
+</body>
+
+</html>

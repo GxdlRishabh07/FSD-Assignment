@@ -4,18 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FSD Lab Assignments - 1 to 6</title>
-    <!-- Google Fonts for clean and modern typography -->
+    <title>FSD Lab Assignments Portal - Rishabh Patil</title>
+    <!-- Google Fonts for typography -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- React 18, ReactDOM aur Babel CDN scripts (taaki React code directly HTML page me bina build tool ke chal sake) -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
     <style>
-        /* Global CSS Reset aur Styling */
+        /* Global CSS Reset & Setup */
         * {
             margin: 0;
             padding: 0;
@@ -26,1143 +21,700 @@
         body {
             background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 30px 20px 50px 20px;
             color: #333;
         }
 
-        /* Header Styling */
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        /* Hero Header Section */
         header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 35px;
+        }
+
+        .top-badge {
+            display: inline-block;
+            background: #2b6cb0;
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 5px 16px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(43, 108, 176, 0.25);
         }
 
         header h1 {
             color: #1a365d;
-            font-size: 2.2rem;
+            font-size: 2.3rem;
+            font-weight: 700;
             margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
 
-        header p {
+        header p.lead {
             color: #4a5568;
-            font-size: 1rem;
+            font-size: 1.05rem;
+            max-width: 720px;
+            margin: 0 auto 18px auto;
+            line-height: 1.6;
         }
 
-        /* Navigation Bar (Tabs) */
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            max-width: 950px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .nav-btn {
-            background-color: #ffffff;
-            color: #2b6cb0;
-            border: 2px solid #2b6cb0;
-            padding: 10px 18px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .nav-btn:hover {
-            background-color: #ebf8ff;
-            transform: translateY(-2px);
-        }
-
-        .nav-btn.active {
-            background-color: #2b6cb0;
-            color: #ffffff;
-            box-shadow: 0 6px 15px rgba(43, 108, 176, 0.35);
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 760px;
-            margin: 0 auto;
-        }
-
-        /* Assignment Card Wrapper */
-        .assignment-section {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            display: none;
-            /* By default hidden rahega, JS se active show hoga */
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        /* Active assignment visible hoga */
-        .assignment-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .assignment-title {
-            color: #2b6cb0;
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 12px;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            text-align: center;
-        }
-
-        .assignment-subtitle {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #718096;
-            font-size: 0.9rem;
-        }
-
-        /* Common Form Styling */
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-bottom: 15px;
-        }
-
-        label {
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: #4a5568;
-        }
-
-        input[type="number"],
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="tel"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1.5px solid #cbd5e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: #3182ce;
-        }
-
-        .btn-primary {
-            background-color: #3182ce;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-        }
-
-        .btn-primary:hover {
-            background-color: #2b6cb0;
-        }
-
-        /* ========================================================
-           ASSIGNMENT 1: CALCULATOR STYLING
-           ======================================================== */
-        .result-box {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #ebf8ff;
-            border: 1.5px dashed #3182ce;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #2b6cb0;
-        }
-
-        /* ========================================================
-           ASSIGNMENT 2: TO-DO LIST STYLING
-           ======================================================== */
-        .todo-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .todo-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .todo-item {
-            display: flex;
-            justify-content: space-between;
+        /* Student Metadata Card */
+        .student-bar {
+            display: inline-flex;
             align-items: center;
-            background: #f7fafc;
-            padding: 12px 16px;
-            border-radius: 8px;
-            border-left: 5px solid #3182ce;
-            transition: all 0.2s ease;
-        }
-
-        .todo-item:hover {
-            background: #edf2f7;
-        }
-
-        .todo-item.completed .todo-text {
-            text-decoration: line-through;
-            color: #a0aec0;
-        }
-
-        .todo-item.completed {
-            border-left-color: #38a169;
-        }
-
-        .todo-text {
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            flex: 1;
-            word-break: break-word;
-        }
-
-        .todo-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-action {
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: opacity 0.2s;
-        }
-
-        .btn-action:hover {
-            opacity: 0.85;
-        }
-
-        .btn-toggle {
-            background-color: #38a169;
-            color: white;
-        }
-
-        .btn-delete {
-            background-color: #e53e3e;
-            color: white;
-        }
-
-        /* ========================================================
-           ASSIGNMENT 3: FORM VALIDATION STYLING
-           ======================================================== */
-        .error-message {
-            color: #e53e3e;
-            font-size: 0.85rem;
-            font-weight: 500;
-            min-height: 18px;
-            display: block;
-        }
-
-        .input-error {
-            border-color: #e53e3e !important;
-            background-color: #fff5f5;
-        }
-
-        .success-box {
-            display: none;
-            margin-top: 15px;
-            padding: 12px;
-            background-color: #c6f6d5;
-            border: 1px solid #38a169;
-            color: #22543d;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        /* ========================================================
-           ASSIGNMENT 4: REACT PROFILE CARD STYLING
-           ======================================================== */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            justify-content: center;
             gap: 20px;
-            margin-top: 20px;
-        }
-
-        .profile-card {
             background: #ffffff;
+            padding: 10px 24px;
+            border-radius: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            flex-wrap: wrap;
             border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 24px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .profile-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #3182ce;
-            margin-bottom: 14px;
-            box-shadow: 0 4px 8px rgba(49, 130, 206, 0.2);
-        }
-
-        .profile-name {
-            font-size: 1.25rem;
-            color: #2d3748;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .profile-role {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #3182ce;
-            background: #ebf8ff;
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-        }
-
-        .profile-desc {
+        .student-meta-item {
             font-size: 0.9rem;
-            color: #718096;
-            line-height: 1.5;
-        }
-
-        /* ========================================================
-           ASSIGNMENT 5: CONTROLLED REACT FORM STYLING
-           ======================================================== */
-        .controlled-form-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-        }
-
-        .realtime-preview-box {
-            background: #f7fafc;
-            border: 2px dashed #cbd5e0;
-            border-radius: 12px;
-            padding: 20px;
-        }
-
-        .preview-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #2b6cb0;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .preview-item {
-            margin-bottom: 10px;
-            font-size: 0.95rem;
             color: #4a5568;
         }
 
-        .preview-item strong {
-            color: #2d3748;
+        .student-meta-item strong {
+            color: #1a365d;
         }
 
-        .preview-item span.highlight {
-            color: #3182ce;
-            font-weight: 500;
+        .student-meta-divider {
+            color: #cbd5e0;
         }
 
-        /* ========================================================
-           ASSIGNMENT 6: REACT COUNTER APP STYLING
-           ======================================================== */
-        .counter-container {
-            text-align: center;
-            padding: 20px 10px;
-        }
-
-        .counter-display {
-            font-size: 4.5rem;
-            font-weight: 700;
-            margin: 20px 0;
-            transition: color 0.3s ease;
-        }
-
-        .counter-positive {
-            color: #38a169;
-            /* Green */
-        }
-
-        .counter-negative {
-            color: #e53e3e;
-            /* Red */
-        }
-
-        .counter-zero {
-            color: #3182ce;
-            /* Blue */
-        }
-
-        .counter-buttons {
+        /* Instruction Alert Banner */
+        .instruction-banner {
+            background: #ebf8ff;
+            border: 1.5px solid #bee3f8;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 30px;
             display: flex;
-            justify-content: center;
+            align-items: center;
+            justify-content: space-between;
             gap: 15px;
             flex-wrap: wrap;
         }
 
-        .counter-btn {
-            border: none;
-            padding: 12px 24px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
+        .instruction-text {
+            color: #2b6cb0;
+            font-size: 0.92rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instruction-badge {
+            background: #3182ce;
             color: white;
-            min-width: 120px;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
         }
 
-        .counter-btn:hover {
-            opacity: 0.9;
-            transform: scale(1.05);
+        .total-count {
+            background: #ffffff;
+            color: #2b6cb0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #cbd5e0;
         }
 
-        .counter-btn:active {
-            transform: scale(0.98);
+        /* Serial-Wise Assignment Grid */
+        .assignments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
         }
 
-        .btn-decrement {
-            background-color: #e53e3e;
+        @media (max-width: 600px) {
+            .assignments-grid {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
         }
 
-        .btn-reset {
-            background-color: #718096;
+        /* Assignment Card */
+        .assignment-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 26px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            border: 1.5px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-increment {
-            background-color: #38a169;
+        .assignment-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 30px rgba(43, 108, 176, 0.15);
+            border-color: #bee3f8;
+        }
+
+        /* Top Bar of the Card */
+        .card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .serial-badge {
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .serial-badge.js {
+            background: #fefcbf;
+            color: #975a16;
+            border: 1px solid #f6e05e;
+        }
+
+        .serial-badge.react {
+            background: #e6fffa;
+            color: #234e52;
+            border: 1px solid #81e6d9;
+        }
+
+        .status-pill {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #38a169;
+            background: #f0fff4;
+            padding: 3px 10px;
+            border-radius: 12px;
+            border: 1px solid #c6f6d5;
+        }
+
+        /* Title & Description */
+        .card-title {
+            color: #1a365d;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            transition: color 0.2s;
+        }
+
+        .assignment-card:hover .card-title {
+            color: #2b6cb0;
+        }
+
+        .card-desc {
+            color: #4a5568;
+            font-size: 0.92rem;
+            line-height: 1.55;
+            margin-bottom: 18px;
+        }
+
+        /* Topics & Concepts */
+        .topics-list {
+            margin-bottom: 18px;
+            padding-left: 18px;
+            color: #718096;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .tech-tag {
+            background: #edf2f7;
+            color: #4a5568;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 6px;
+        }
+
+        /* Action Button */
+        .card-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #edf2f7;
+            padding-top: 16px;
+            margin-top: auto;
+        }
+
+        .action-label {
+            font-size: 0.82rem;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .btn-open {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #3182ce;
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 9px 18px;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(49, 130, 206, 0.25);
+        }
+
+        .assignment-card:hover .btn-open {
+            background-color: #2b6cb0;
+            transform: translateX(3px);
+            box-shadow: 0 6px 14px rgba(43, 108, 176, 0.35);
+        }
+
+        /* Table of Contents Section */
+        .toc-section {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            margin-bottom: 40px;
+        }
+
+        .toc-title {
+            color: #1a365d;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f7fafc;
+            color: #2d3748;
+            font-weight: 600;
+            padding: 12px 14px;
+            border-bottom: 2px solid #edf2f7;
+        }
+
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #edf2f7;
+            color: #4a5568;
+        }
+
+        tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        .table-link {
+            color: #2b6cb0;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .table-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: #4a5568;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        footer strong {
+            color: #1a365d;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Header Section -->
-    <header>
-        <h1>Full Stack Web Development Lab</h1>
-        <p>Topic-wise Practicals: JavaScript Functions, DOM, Form Validation & React Basics</p>
-    </header>
-
-    <!-- Navigation Buttons to switch between all 6 Assignments -->
-    <nav>
-        <button class="nav-btn active" onclick="switchAssignment('assignment1', this)">Assignment 1: Calculator</button>
-        <button class="nav-btn" onclick="switchAssignment('assignment2', this)">Assignment 2: To-Do List</button>
-        <button class="nav-btn" onclick="switchAssignment('assignment3', this)">Assignment 3: Form Validation</button>
-        <button class="nav-btn" onclick="switchAssignment('assignment4', this)">Assignment 4: React Profile
-            Card</button>
-        <button class="nav-btn" onclick="switchAssignment('assignment5', this)">Assignment 5: Controlled React
-            Form</button>
-        <button class="nav-btn" onclick="switchAssignment('assignment6', this)">Assignment 6: React Counter App</button>
-    </nav>
-
     <div class="container">
 
-        <!-- ========================================================
-             ASSIGNMENT 1: JAVASCRIPT CALCULATOR
-             ======================================================== -->
-        <section id="assignment1" class="assignment-section active">
-            <h2 class="assignment-title">Assignment 1: Simple Calculator</h2>
-            <p class="assignment-subtitle">
-                Using dedicated JavaScript functions & a switch statement for arithmetic operations.
+        <!-- Header Section -->
+        <header>
+            <span class="top-badge">Full Stack Web Development Lab</span>
+            <h1>Topic-wise Practical Assignments</h1>
+            <p class="lead">
+                A structured collection of 6 lab assignments covering Vanilla JavaScript Functions, DOM Manipulation,
+                Real-time Form Validation, and Core React Concepts.
             </p>
 
-            <div class="calc-form">
-                <!-- First Number Input -->
-                <div class="form-group">
-                    <label for="calc-num1">Enter First Number:</label>
-                    <input type="number" id="calc-num1" placeholder="e.g. 10">
+            <!-- Student Metadata -->
+            <div class="student-bar">
+                <div class="student-meta-item">
+                    Student: <strong>Rishabh Patil</strong>
+                </div>
+                <span class="student-meta-divider">|</span>
+                <div class="student-meta-item">
+                    PRN: <strong>1272250228</strong>
+                </div>
+                <span class="student-meta-divider">|</span>
+                <div class="student-meta-item">
+                    Subject: <strong>FSD Lab</strong>
+                </div>
+                <span class="student-meta-divider">|</span>
+                <div class="student-meta-item">
+                    Status: <strong>All 6 Completed</strong>
+                </div>
+            </div>
+        </header>
+
+        <!-- Information / Instruction Banner -->
+        <div class="instruction-banner">
+            <div class="instruction-text">
+                <span class="instruction-badge">Navigation Guide</span>
+                <span>All assignments are arranged in serial order below. Click on any assignment to launch it in a <strong>new page</strong>.</span>
+            </div>
+            <span class="total-count">6 Assignments</span>
+        </div>
+
+        <!-- Serial-Wise Assignments Grid -->
+        <div class="assignments-grid">
+
+            <!-- ========================================================
+                 ASSIGNMENT 1 CARD
+                 ======================================================== -->
+            <a href="assignment1.html" target="_blank" rel="noopener noreferrer" class="assignment-card">
+                <div>
+                    <div class="card-top">
+                        <span class="serial-badge js">
+                            🔢 Assignment 01
+                        </span>
+                        <span class="status-pill">● Completed</span>
+                    </div>
+
+                    <h2 class="card-title">JavaScript Calculator using Functions</h2>
+
+                    <p class="card-desc">
+                        A clean arithmetic calculator implemented using dedicated JavaScript functions (<code>add</code>, <code>subtract</code>, <code>multiply</code>, <code>divide</code>) and a <code>switch</code> statement to direct user operations.
+                    </p>
+
+                    <ul class="topics-list">
+                        <li>Modular Arithmetic Functions</li>
+                        <li>Switch Statement Operation Controller</li>
+                        <li>Zero Division Error Handling</li>
+                    </ul>
+
+                    <div class="tech-tags">
+                        <span class="tech-tag">Vanilla JavaScript</span>
+                        <span class="tech-tag">Functions</span>
+                        <span class="tech-tag">Switch Case</span>
+                        <span class="tech-tag">HTML5 / CSS3</span>
+                    </div>
                 </div>
 
-                <!-- Operator Select Dropdown -->
-                <div class="form-group">
-                    <label for="calc-operator">Select Operation:</label>
-                    <select id="calc-operator">
-                        <option value="+">Addition (+)</option>
-                        <option value="-">Subtraction (-)</option>
-                        <option value="*">Multiplication (*)</option>
-                        <option value="/">Division (/)</option>
-                    </select>
+                <div class="card-action">
+                    <span class="action-label">Opens in a new page</span>
+                    <span class="btn-open">Open Assignment 1 ↗</span>
+                </div>
+            </a>
+
+
+            <!-- ========================================================
+                 ASSIGNMENT 2 CARD
+                 ======================================================== -->
+            <a href="assignment2.html" target="_blank" rel="noopener noreferrer" class="assignment-card">
+                <div>
+                    <div class="card-top">
+                        <span class="serial-badge js">
+                            📝 Assignment 02
+                        </span>
+                        <span class="status-pill">● Completed</span>
+                    </div>
+
+                    <h2 class="card-title">DOM-based Interactive To-Do List</h2>
+
+                    <p class="card-desc">
+                        An interactive task tracker demonstrating dynamic DOM manipulation. Create new list elements on the fly, toggle task completion with strikethrough styling, and remove tasks dynamically.
+                    </p>
+
+                    <ul class="topics-list">
+                        <li><code>document.createElement()</code> &amp; <code>appendChild()</code></li>
+                        <li>Class Toggle (<code>classList.toggle('completed')</code>)</li>
+                        <li>Dynamic Node Removal with <code>element.remove()</code></li>
+                    </ul>
+
+                    <div class="tech-tags">
+                        <span class="tech-tag">DOM Manipulation</span>
+                        <span class="tech-tag">Event Handling</span>
+                        <span class="tech-tag">Dynamic UI</span>
+                        <span class="tech-tag">CSS Transitions</span>
+                    </div>
                 </div>
 
-                <!-- Second Number Input -->
-                <div class="form-group">
-                    <label for="calc-num2">Enter Second Number:</label>
-                    <input type="number" id="calc-num2" placeholder="e.g. 5">
+                <div class="card-action">
+                    <span class="action-label">Opens in a new page</span>
+                    <span class="btn-open">Open Assignment 2 ↗</span>
+                </div>
+            </a>
+
+
+            <!-- ========================================================
+                 ASSIGNMENT 3 CARD
+                 ======================================================== -->
+            <a href="assignment3.html" target="_blank" rel="noopener noreferrer" class="assignment-card">
+                <div>
+                    <div class="card-top">
+                        <span class="serial-badge js">
+                            🛡️ Assignment 03
+                        </span>
+                        <span class="status-pill">● Completed</span>
+                    </div>
+
+                    <h2 class="card-title">User Registration Form Validation</h2>
+
+                    <p class="card-desc">
+                        Client-side form validation verifying Full Name, Email, Phone Number, and Password. Displays immediate real-time error messages, red input borders, and a success banner upon valid submission.
+                    </p>
+
+                    <ul class="topics-list">
+                        <li>Regular Expressions (RegEx) for Email &amp; Phone</li>
+                        <li>Error state management &amp; boundary checks</li>
+                        <li>Form submission interception (<code>preventDefault</code>)</li>
+                    </ul>
+
+                    <div class="tech-tags">
+                        <span class="tech-tag">Form Validation</span>
+                        <span class="tech-tag">RegEx</span>
+                        <span class="tech-tag">Error Feedback</span>
+                        <span class="tech-tag">DOM Alerts</span>
+                    </div>
                 </div>
 
-                <!-- Button to trigger calculation -->
-                <button type="button" class="btn-primary" onclick="performCalculation()">Calculate Result</button>
-
-                <!-- Box to show calculated result -->
-                <div class="result-box" id="calc-result">
-                    Result: --
+                <div class="card-action">
+                    <span class="action-label">Opens in a new page</span>
+                    <span class="btn-open">Open Assignment 3 ↗</span>
                 </div>
+            </a>
+
+
+            <!-- ========================================================
+                 ASSIGNMENT 4 CARD
+                 ======================================================== -->
+            <a href="assignment4.html" target="_blank" rel="noopener noreferrer" class="assignment-card">
+                <div>
+                    <div class="card-top">
+                        <span class="serial-badge react">
+                            ⚛️ Assignment 04
+                        </span>
+                        <span class="status-pill">● Completed</span>
+                    </div>
+
+                    <h2 class="card-title">React Profile Card using Props</h2>
+
+                    <p class="card-desc">
+                        A reusable React component demonstrating the core concept of Props. The same <code>&lt;ProfileCard /&gt;</code> component accepts dynamic props (name, role, imageUrl, description) to render modern developer cards.
+                    </p>
+
+                    <ul class="topics-list">
+                        <li>Functional React Components</li>
+                        <li>Component Reusability &amp; Clean Props Passing</li>
+                        <li>Responsive Grid &amp; Avatar Styling</li>
+                    </ul>
+
+                    <div class="tech-tags">
+                        <span class="tech-tag">React 18</span>
+                        <span class="tech-tag">JSX</span>
+                        <span class="tech-tag">Props</span>
+                        <span class="tech-tag">Component Architecture</span>
+                    </div>
+                </div>
+
+                <div class="card-action">
+                    <span class="action-label">Opens in a new page</span>
+                    <span class="btn-open">Open Assignment 4 ↗</span>
+                </div>
+            </a>
+
+
+            <!-- ========================================================
+                 ASSIGNMENT 5 CARD
+                 ======================================================== -->
+            <a href="assignment5.html" target="_blank" rel="noopener noreferrer" class="assignment-card">
+                <div>
+                    <div class="card-top">
+                        <span class="serial-badge react">
+                            ⚡ Assignment 05
+                        </span>
+                        <span class="status-pill">● Completed</span>
+                    </div>
+
+                    <h2 class="card-title">Controlled React Form with Live Preview</h2>
+
+                    <p class="card-desc">
+                        A controlled form where React state (<code>useState</code>) manages input fields in real-time. Features synchronized two-way data binding and displays an instant live preview box as the user types.
+                    </p>
+
+                    <ul class="topics-list">
+                        <li>React <code>useState</code> Hook for Object State</li>
+                        <li>Two-Way Data Binding (<code>value</code> &amp; <code>onChange</code>)</li>
+                        <li>Real-time Synchronized Preview UI</li>
+                    </ul>
+
+                    <div class="tech-tags">
+                        <span class="tech-tag">React State</span>
+                        <span class="tech-tag">useState Hook</span>
+                        <span class="tech-tag">Controlled Inputs</span>
+                        <span class="tech-tag">Live Preview</span>
+                    </div>
+                </div>
+
+                <div class="card-action">
+                    <span class="action-label">Opens in a new page</span>
+                    <span class="btn-open">Open Assignment 5 ↗</span>
+                </div>
+            </a>
+
+
+            <!-- ========================================================
+                 ASSIGNMENT 6 CARD
+                 ======================================================== -->
+            <a href="assignment6.html" target="_blank" rel="noopener noreferrer" class="assignment-card">
+                <div>
+                    <div class="card-top">
+                        <span class="serial-badge react">
+                            🔢 Assignment 06
+                        </span>
+                        <span class="status-pill">● Completed</span>
+                    </div>
+
+                    <h2 class="card-title">React Counter App with Dynamic Colors</h2>
+
+                    <p class="card-desc">
+                        An interactive counter built with the <code>useState</code> hook featuring Increment, Decrement, and Reset controls. Dynamically switches numbers between Green (positive), Red (negative), and Blue (zero).
+                    </p>
+
+                    <ul class="topics-list">
+                        <li>State mutations via <code>setCount</code></li>
+                        <li>Conditional CSS classes based on numeric state</li>
+                        <li>Clean button trigger animations</li>
+                    </ul>
+
+                    <div class="tech-tags">
+                        <span class="tech-tag">React 18</span>
+                        <span class="tech-tag">useState</span>
+                        <span class="tech-tag">Conditional Styling</span>
+                        <span class="tech-tag">Micro-animations</span>
+                    </div>
+                </div>
+
+                <div class="card-action">
+                    <span class="action-label">Opens in a new page</span>
+                    <span class="btn-open">Open Assignment 6 ↗</span>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Table of Contents / Quick Index -->
+        <section class="toc-section">
+            <h2 class="toc-title">📚 Table of Contents &amp; Quick Access</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Assignment Title</th>
+                            <th>Key Concepts Covered</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1</strong></td>
+                            <td>JavaScript Calculator</td>
+                            <td>Functions, Switch Statement, Arithmetic Operations</td>
+                            <td><a href="assignment1.html" target="_blank" class="table-link">Launch Assignment 1 ↗</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2</strong></td>
+                            <td>DOM-based To-Do List</td>
+                            <td>Dynamic DOM Elements, Event Handling, Class Toggle</td>
+                            <td><a href="assignment2.html" target="_blank" class="table-link">Launch Assignment 2 ↗</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>3</strong></td>
+                            <td>User Registration Form Validation</td>
+                            <td>RegEx Patterns, Error State Handling, Submit Interception</td>
+                            <td><a href="assignment3.html" target="_blank" class="table-link">Launch Assignment 3 ↗</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>4</strong></td>
+                            <td>React Profile Card using Props</td>
+                            <td>Functional Components, Reusability, Props Passing</td>
+                            <td><a href="assignment4.html" target="_blank" class="table-link">Launch Assignment 4 ↗</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>5</strong></td>
+                            <td>Controlled React Form</td>
+                            <td>React <code>useState</code>, Controlled Inputs, Real-time Live Preview</td>
+                            <td><a href="assignment5.html" target="_blank" class="table-link">Launch Assignment 5 ↗</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>6</strong></td>
+                            <td>React Counter App</td>
+                            <td>State Hooks, Increment/Decrement/Reset, Dynamic Color State</td>
+                            <td><a href="assignment6.html" target="_blank" class="table-link">Launch Assignment 6 ↗</a></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
-
-        <!-- ========================================================
-             ASSIGNMENT 2: DOM-BASED TO-DO LIST
-             ======================================================== -->
-        <section id="assignment2" class="assignment-section">
-            <h2 class="assignment-title">Assignment 2: Interactive To-Do List</h2>
-            <p class="assignment-subtitle">
-                Add tasks, toggle completed state, and delete tasks dynamically using DOM methods.
-            </p>
-
-            <!-- Input area for new task -->
-            <div class="todo-input-group">
-                <input type="text" id="todo-input" placeholder="What do you need to do today?">
-                <button type="button" class="btn-primary" style="margin-top:0; width: auto;" onclick="addTask()">Add
-                    Task</button>
-            </div>
-
-            <!-- Unordered list where tasks will be added dynamically -->
-            <ul id="todo-list" class="todo-list">
-                <!-- Javascript will add <li> elements here -->
-            </ul>
-        </section>
-
-
-        <!-- ========================================================
-             ASSIGNMENT 3: JAVASCRIPT FORM VALIDATION
-             ======================================================== -->
-        <section id="assignment3" class="assignment-section">
-            <h2 class="assignment-title">Assignment 3: User Registration Form</h2>
-            <p class="assignment-subtitle">
-                Input validation with real-time error messages for Name, Email, Phone, and Password.
-            </p>
-
-            <form id="registration-form" onsubmit="validateRegistrationForm(event)" novalidate>
-                <!-- Full Name Field -->
-                <div class="form-group">
-                    <label for="reg-name">Full Name:</label>
-                    <input type="text" id="reg-name" placeholder="Enter your full name">
-                    <span class="error-message" id="error-name"></span>
-                </div>
-
-                <!-- Email Field -->
-                <div class="form-group">
-                    <label for="reg-email">Email Address:</label>
-                    <input type="email" id="reg-email" placeholder="name@example.com">
-                    <span class="error-message" id="error-email"></span>
-                </div>
-
-                <!-- Phone Field -->
-                <div class="form-group">
-                    <label for="reg-phone">Phone Number:</label>
-                    <input type="tel" id="reg-phone" placeholder="10-digit mobile number">
-                    <span class="error-message" id="error-phone"></span>
-                </div>
-
-                <!-- Password Field -->
-                <div class="form-group">
-                    <label for="reg-password">Password:</label>
-                    <input type="password" id="reg-password" placeholder="At least 6 characters">
-                    <span class="error-message" id="error-password"></span>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn-primary">Register Now</button>
-
-                <!-- Success Alert Message -->
-                <div class="success-box" id="reg-success-message">
-                    🎉 Registration Successful! All details are valid.
-                </div>
-            </form>
-        </section>
-
-
-        <!-- ========================================================
-             ASSIGNMENT 4: REACT PROFILE CARD USING PROPS
-             ======================================================== -->
-        <section id="assignment4" class="assignment-section">
-            <h2 class="assignment-title">Assignment 4: React Profile Card using Props</h2>
-            <p class="assignment-subtitle">
-                A reusable React component receiving <code>name</code>, <code>imageUrl</code>, and
-                <code>description</code> via props.
-            </p>
-            <!-- React root container for Assignment 4 -->
-            <div id="react-profile-card-root"></div>
-        </section>
-
-
-        <!-- ========================================================
-             ASSIGNMENT 5: CONTROLLED REACT FORM
-             ======================================================== -->
-        <section id="assignment5" class="assignment-section">
-            <h2 class="assignment-title">Assignment 5: Controlled React Form</h2>
-            <p class="assignment-subtitle">
-                A form where React state controls the inputs and displays live updates in real-time below.
-            </p>
-            <!-- React root container for Assignment 5 -->
-            <div id="react-controlled-form-root"></div>
-        </section>
-
-
-        <!-- ========================================================
-             ASSIGNMENT 6: REACT COUNTER APP USING USESTATE
-             ======================================================== -->
-        <section id="assignment6" class="assignment-section">
-            <h2 class="assignment-title">Assignment 6: React Counter App</h2>
-            <p class="assignment-subtitle">
-                Counter application using React <code>useState</code> hook with Increment, Decrement, and Reset.
-            </p>
-            <!-- React root container for Assignment 6 -->
-            <div id="react-counter-root"></div>
-        </section>
+        <!-- Footer -->
+        <footer>
+            <p><strong>Full Stack Web Development (FSD) Lab Practicals</strong></p>
+            <p>Designed and Implemented by <strong>Rishabh Patil</strong> (PRN: 1272250228)</p>
+        </footer>
 
     </div>
 
-    <!-- ========================================================
-         JAVASCRIPT CODE FOR ASSIGNMENTS 1, 2, 3 & NAVIGATION
-         ======================================================== -->
-    <script>
-        // -------------------------------------------------------------------------
-        // NAVIGATION: Tabs switch karne ka logic
-        // -------------------------------------------------------------------------
-        function switchAssignment(assignmentId, clickedButton) {
-            // 1. Saare assignment sections ko select karke hide (active class remove) karenge
-            var sections = document.querySelectorAll('.assignment-section');
-            for (var i = 0; i < sections.length; i++) {
-                sections[i].classList.remove('active');
-            }
-
-            // 2. Saare navigation buttons se active styling hatayenge
-            var buttons = document.querySelectorAll('.nav-btn');
-            for (var j = 0; j < buttons.length; j++) {
-                buttons[j].classList.remove('active');
-            }
-
-            // 3. Jis assignment pe click hua hai usko display (active) karenge
-            document.getElementById(assignmentId).classList.add('active');
-
-            // 4. Click kiye gaye button ko active highlight karenge
-            clickedButton.classList.add('active');
-        }
-
-
-        // -------------------------------------------------------------------------
-        // ASSIGNMENT 1: CALCULATOR FUNCTIONS
-        // -------------------------------------------------------------------------
-
-        // Addition Function
-        function add(num1, num2) {
-            return num1 + num2;
-        }
-
-        // Subtraction Function
-        function subtract(num1, num2) {
-            return num1 - num2;
-        }
-
-        // Multiplication Function
-        function multiply(num1, num2) {
-            return num1 * num2;
-        }
-
-        // Division Function
-        function divide(num1, num2) {
-            // Zero se divide hone se rokne ke liye check
-            if (num2 === 0) {
-                return "Cannot divide by zero";
-            }
-            return num1 / num2;
-        }
-
-        // Main Calculation Controller Function
-        function performCalculation() {
-            // Step 1: Input values ko get karna
-            var num1Input = document.getElementById('calc-num1').value;
-            var num2Input = document.getElementById('calc-num2').value;
-            var operator = document.getElementById('calc-operator').value;
-            var resultDisplay = document.getElementById('calc-result');
-
-            // Step 2: Check karna ki inputs empty toh nahi hain
-            if (num1Input === "" || num2Input === "") {
-                resultDisplay.innerText = "Please enter both numbers!";
-                resultDisplay.style.color = "#e53e3e";
-                return;
-            }
-
-            // Step 3: String values ko Numbers me convert karna
-            var n1 = parseFloat(num1Input);
-            var n2 = parseFloat(num2Input);
-            var calculatedResult = 0;
-
-            // Step 4: Switch statement se user ke chune operator ke hisab se function call karna
-            switch (operator) {
-                case "+":
-                    calculatedResult = add(n1, n2);
-                    break;
-                case "-":
-                    calculatedResult = subtract(n1, n2);
-                    break;
-                case "*":
-                    calculatedResult = multiply(n1, n2);
-                    break;
-                case "/":
-                    calculatedResult = divide(n1, n2);
-                    break;
-                default:
-                    calculatedResult = "Invalid Operator";
-            }
-
-            // Step 5: Screen par result show karna
-            resultDisplay.style.color = "#2b6cb0";
-            resultDisplay.innerText = "Result: " + calculatedResult;
-        }
-
-
-        // -------------------------------------------------------------------------
-        // ASSIGNMENT 2: DOM-BASED TO-DO LIST FUNCTIONS
-        // -------------------------------------------------------------------------
-
-        function addTask() {
-            // Step 1: Input field ko select karna aur value nikalna
-            var inputField = document.getElementById('todo-input');
-            var taskText = inputField.value.trim(); // extra spaces hatane ke liye trim()
-
-            // Step 2: Agar input khali ho toh alert dekar rokna
-            if (taskText === "") {
-                alert("Please enter a task!");
-                return;
-            }
-
-            // Step 3: Naya <li> element create karna (DOM method)
-            var li = document.createElement('li');
-            li.className = 'todo-item'; // CSS class attach ki
-
-            // Step 4: Task ke text ke liye <span> create karna
-            var span = document.createElement('span');
-            span.className = 'todo-text';
-            span.innerText = taskText;
-
-            // Step 5: Buttons ke container div ko create karna
-            var actionsDiv = document.createElement('div');
-            actionsDiv.className = 'todo-actions';
-
-            // Complete / Done Button create karna
-            var doneBtn = document.createElement('button');
-            doneBtn.className = 'btn-action btn-toggle';
-            doneBtn.innerText = 'Done';
-            doneBtn.onclick = function () {
-                // li me 'completed' class toggle karna (cut/strike effect)
-                li.classList.toggle('completed');
-                if (li.classList.contains('completed')) {
-                    doneBtn.innerText = 'Undo';
-                } else {
-                    doneBtn.innerText = 'Done';
-                }
-            };
-
-            // Delete Button create karna
-            var deleteBtn = document.createElement('button');
-            deleteBtn.className = 'btn-action btn-delete';
-            deleteBtn.innerText = 'Delete';
-            deleteBtn.onclick = function () {
-                // li ko list se dynamically remove karna (DOM method)
-                li.remove();
-            };
-
-            // Step 6: Saare elements ko ek dusre me assemble karna (appendChild)
-            actionsDiv.appendChild(doneBtn);
-            actionsDiv.appendChild(deleteBtn);
-
-            li.appendChild(span);
-            li.appendChild(actionsDiv);
-
-            // Step 7: Final <li> ko main <ul> list me add karna
-            document.getElementById('todo-list').appendChild(li);
-
-            // Step 8: Input box ko wapas empty karna naye task ke liye
-            inputField.value = "";
-        }
-
-
-        // -------------------------------------------------------------------------
-        // ASSIGNMENT 3: FORM VALIDATION FUNCTIONS
-        // -------------------------------------------------------------------------
-
-        function validateRegistrationForm(event) {
-            // Form ko page refresh karne se rokna
-            event.preventDefault();
-
-            // Inputs ko select karna
-            var nameInput = document.getElementById('reg-name');
-            var emailInput = document.getElementById('reg-email');
-            var phoneInput = document.getElementById('reg-phone');
-            var passwordInput = document.getElementById('reg-password');
-
-            // Error display spans ko select karna
-            var errorName = document.getElementById('error-name');
-            var errorEmail = document.getElementById('error-email');
-            var errorPhone = document.getElementById('error-phone');
-            var errorPassword = document.getElementById('error-password');
-
-            // Success box
-            var successBox = document.getElementById('reg-success-message');
-
-            // Pehle ke saare errors reset karna
-            errorName.innerText = "";
-            errorEmail.innerText = "";
-            errorPhone.innerText = "";
-            errorPassword.innerText = "";
-
-            nameInput.classList.remove('input-error');
-            emailInput.classList.remove('input-error');
-            phoneInput.classList.remove('input-error');
-            passwordInput.classList.remove('input-error');
-            successBox.style.display = "none";
-
-            // Track karne ke liye flag variable
-            var isValid = true;
-
-            // 1. Full Name Validation: Khali nahi hona chahiye aur kam se kam 3 characters hone chahiye
-            var nameValue = nameInput.value.trim();
-            if (nameValue === "") {
-                errorName.innerText = "Full Name is required.";
-                nameInput.classList.add('input-error');
-                isValid = false;
-            } else if (nameValue.length < 3) {
-                errorName.innerText = "Name must be at least 3 characters long.";
-                nameInput.classList.add('input-error');
-                isValid = false;
-            }
-
-            // 2. Email Validation: Basic standard email format check
-            var emailValue = emailInput.value.trim();
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (emailValue === "") {
-                errorEmail.innerText = "Email address is required.";
-                emailInput.classList.add('input-error');
-                isValid = false;
-            } else if (!emailRegex.test(emailValue)) {
-                errorEmail.innerText = "Please enter a valid email address (e.g., user@domain.com).";
-                emailInput.classList.add('input-error');
-                isValid = false;
-            }
-
-            // 3. Phone Number Validation: Exactly 10 digits hone chahiye
-            var phoneValue = phoneInput.value.trim();
-            var phoneRegex = /^[0-9]{10}$/;
-            if (phoneValue === "") {
-                errorPhone.innerText = "Phone number is required.";
-                phoneInput.classList.add('input-error');
-                isValid = false;
-            } else if (!phoneRegex.test(phoneValue)) {
-                errorPhone.innerText = "Phone number must be exactly 10 digits.";
-                phoneInput.classList.add('input-error');
-                isValid = false;
-            }
-
-            // 4. Password Validation: Minimum 6 characters
-            var passwordValue = passwordInput.value;
-            if (passwordValue === "") {
-                errorPassword.innerText = "Password is required.";
-                passwordInput.classList.add('input-error');
-                isValid = false;
-            } else if (passwordValue.length < 6) {
-                errorPassword.innerText = "Password must be at least 6 characters long.";
-                passwordInput.classList.add('input-error');
-                isValid = false;
-            }
-
-            // Agar sabhi inputs valid hain:
-            if (isValid) {
-                successBox.style.display = "block";
-                document.getElementById('registration-form').reset();
-            }
-        }
-    </script>
-
-
-    <!-- ========================================================
-         REACT CODE FOR ASSIGNMENTS 4, 5 & 6 (USING BABEL)
-         ======================================================== -->
-    <script type="text/babel">
-        // -------------------------------------------------------------------------
-        // ASSIGNMENT 4: REACT PROFILE CARD COMPONENT USING PROPS
-        // -------------------------------------------------------------------------
-
-        // 1. ProfileCard Component (Props receive kar raha hai)
-        function ProfileCard(props) {
-            return (
-                <div className="profile-card">
-                    {/* User Profile Image prop se pass ho rahi hai */}
-                    <img
-                        src={props.imageUrl}
-                        alt={props.name}
-                        className="profile-avatar"
-                    />
-                    {/* User Name prop se display ho raha hai */}
-                    <h3 className="profile-name">{props.name}</h3>
-                    {/* Role / Tag prop se */}
-                    <div className="profile-role">{props.role}</div>
-                    {/* Short Description prop se display ho rahi hai */}
-                    <p className="profile-desc">{props.description}</p>
-                </div>
-            );
-        }
-
-        // Parent Component jo ProfileCard ko use karta hai aur alag-alag Props pass karta hai
-        function ProfileCardApp() {
-            return (
-                <div>
-                    <p style={{ textAlign: "center", color: "#4a5568", marginBottom: "15px", fontSize: "0.95rem" }}>
-                        Yeh component reusable hai. Humne ek hi <code>&lt;ProfileCard /&gt;</code> component ko alag-alag <strong>props</strong> (name, imageUrl, description) bhej kar render kiya hai:
-                    </p>
-                    <div className="cards-grid">
-                        {/* Profile Card 1 */}
-                        <ProfileCard
-                            name="Rishabh Patil"
-                            role="Frontend Developer"
-                            imageUrl="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80"
-                            description="Enthusiastic developer who loves creating clean UI designs, learning modern web technologies and building interactive web apps."
-                        />
-
-                        {/* Profile Card 2 */}
-                        <ProfileCard
-                            name="Aditi Sharma"
-                            role="React UI Designer"
-                            imageUrl="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80"
-                            description="Passionate about designing intuitive digital user interfaces, responsive layouts, and accessible component libraries."
-                        />
-                    </div>
-                </div>
-            );
-        }
-
-        // Render Assignment 4 into its DOM container
-        const profileRoot = ReactDOM.createRoot(document.getElementById('react-profile-card-root'));
-        profileRoot.render(<ProfileCardApp />);
-
-
-        // -------------------------------------------------------------------------
-        // ASSIGNMENT 5: CONTROLLED REACT FORM
-        // -------------------------------------------------------------------------
-
-        function ControlledFormApp() {
-            // React Hook: useState form ke sabhi fields ka data hold karta hai
-            const [formData, setFormData] = React.useState({
-                fullName: '',
-                email: '',
-                techStack: 'React',
-                feedback: ''
-            });
-
-            // Jab bhi user input me kuch type karega, yeh function state update karega
-            const handleChange = (e) => {
-                const { name, value } = e.target;
-                // Previous state ko preserve karte hue sirf changed field update karte hain
-                setFormData(prev => ({
-                    ...prev,
-                    [name]: value
-                }));
-            };
-
-            return (
-                <div className="controlled-form-container">
-                    <form onSubmit={(e) => e.preventDefault()}>
-                        {/* Input 1: Full Name */}
-                        <div className="form-group">
-                            <label>Full Name:</label>
-                            <input
-                                type="text"
-                                name="fullName"
-                                placeholder="e.g. Rahul Verma"
-                                value={formData.fullName}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        {/* Input 2: Email */}
-                        <div className="form-group">
-                            <label>Email Address:</label>
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="e.g. rahul@example.com"
-                                value={formData.email}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        {/* Input 3: Tech Stack Dropdown */}
-                        <div className="form-group">
-                            <label>Favorite Tech Stack:</label>
-                            <select
-                                name="techStack"
-                                value={formData.techStack}
-                                onChange={handleChange}
-                            >
-                                <option value="React">React.js</option>
-                                <option value="Node.js">Node.js</option>
-                                <option value="JavaScript">Pure JavaScript</option>
-                                <option value="Python">Python</option>
-                            </select>
-                        </div>
-
-                        {/* Input 4: Feedback / Bio */}
-                        <div className="form-group">
-                            <label>Bio / Notes:</label>
-                            <textarea
-                                name="feedback"
-                                rows="3"
-                                placeholder="Type something about yourself..."
-                                value={formData.feedback}
-                                onChange={handleChange}
-                            ></textarea>
-                        </div>
-                    </form>
-
-                    {/* REAL-TIME PREVIEW: Data displayed instantly as user types */}
-                    <div className="realtime-preview-box">
-                        <div className="preview-title">
-                            ⚡ Real-Time Live Preview (Controlled by React State)
-                        </div>
-                        <div className="preview-item">
-                            <strong>Full Name:</strong> <span className="highlight">{formData.fullName || "(Waiting for input...)"}</span>
-                        </div>
-                        <div className="preview-item">
-                            <strong>Email Address:</strong> <span className="highlight">{formData.email || "(Waiting for input...)"}</span>
-                        </div>
-                        <div className="preview-item">
-                            <strong>Selected Tech Stack:</strong> <span className="highlight">{formData.techStack}</span>
-                        </div>
-                        <div className="preview-item">
-                            <strong>Bio / Notes:</strong> <span className="highlight">{formData.feedback || "(Waiting for input...)"}</span>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-
-        // Render Assignment 5 into its DOM container
-        const formRoot = ReactDOM.createRoot(document.getElementById('react-controlled-form-root'));
-        formRoot.render(<ControlledFormApp />);
-
-
-        // -------------------------------------------------------------------------
-        // ASSIGNMENT 6: REACT COUNTER APP USING USESTATE HOOK
-        // -------------------------------------------------------------------------
-
-        function CounterApp() {
-            // useState hook: 'count' current value store karta hai, 'setCount' use modify karta hai
-            const [count, setCount] = React.useState(0);
-
-            // Increment Function (Value ko 1 se badhana)
-            const handleIncrement = () => {
-                setCount(prevCount => prevCount + 1);
-            };
-
-            // Decrement Function (Value ko 1 se ghatana)
-            const handleDecrement = () => {
-                setCount(prevCount => prevCount - 1);
-            };
-
-            // Reset Function (Value ko wapas 0 karna)
-            const handleReset = () => {
-                setCount(0);
-            };
-
-            // Dynamic color determine karna value ke hisab se (Positive = Green, Negative = Red, Zero = Blue)
-            let colorClass = "counter-zero";
-            if (count > 0) {
-                colorClass = "counter-positive";
-            } else if (count < 0) {
-                colorClass = "counter-negative";
-            }
-
-            return (
-                <div className="counter-container">
-                    <p style={{ color: "#718096", fontSize: "0.95rem" }}>
-                        Current Value (Managed by <code>useState</code>):
-                    </p>
-
-                    {/* Display Number */}
-                    <div className={`counter-display ${colorClass}`}>
-                        {count}
-                    </div>
-
-                    {/* Counter Control Buttons */}
-                    <div className="counter-buttons">
-                        {/* Decrement Button */}
-                        <button
-                            className="counter-btn btn-decrement"
-                            onClick={handleDecrement}
-                        >
-                            - Decrement
-                        </button>
-
-                        {/* Reset Button */}
-                        <button
-                            className="counter-btn btn-reset"
-                            onClick={handleReset}
-                        >
-                            ↺ Reset
-                        </button>
-
-                        {/* Increment Button */}
-                        <button
-                            className="counter-btn btn-increment"
-                            onClick={handleIncrement}
-                        >
-                            + Increment
-                        </button>
-                    </div>
-                </div>
-            );
-        }
-
-        // Render Assignment 6 into its DOM container
-        const counterRoot = ReactDOM.createRoot(document.getElementById('react-counter-root'));
-        counterRoot.render(<CounterApp />);
-    </script>
 </body>
 
 </html>
